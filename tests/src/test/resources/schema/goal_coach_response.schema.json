@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GoalCoachResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["refined_goal", "key_results", "confidence_score"],
+  "properties": {
+    "refined_goal": { "type": "string" },
+    "key_results": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 0,
+      "maxItems": 5
+    },
+    "confidence_score": { "type": "integer", "minimum": 1, "maximum": 10 }
+  }
+}
+

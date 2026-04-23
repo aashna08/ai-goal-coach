@@ -1,0 +1,10 @@
+{
+  "refined_goal": "Ship weekly learning habit",
+  "key_results": [
+    "Complete 3 focused sessions per week for 8 weeks",
+    "Track progress weekly",
+    "Define baseline metric within 1 week"
+  ],
+  "confidence_score": 8,
+  "explanation": "I added this field for debugging; strict clients will break."
+}
