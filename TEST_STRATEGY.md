@@ -92,8 +92,8 @@ Given an input goal string, the system returns **strict JSON**:
   - Deterministic stub tests always run.
   - Real Hugging Face tests run nightly or behind a flag (requires secrets).
 - Artifacts:
-  - store test reports (Surefire XML)
-  - store sampled failure payloads (redacted)
+  - store test reports (allure reports)
+  - store sampled failure screenshots
 
 ## Regression strategy if the model/API evolves
 
