@@ -1,6 +1,6 @@
 # AI Goal Coach — Simulated Bug Hunt
 
-Below are four **realistic defect stories** (common in AI-backed APIs). They describe what *would* go wrong if guardrails and strict contracts were missing. The **current codebase is written to avoid these bugs**; JUnit tests prove the good behavior.
+Below are five **realistic defect stories** (common in AI-backed APIs). They describe what *would* go wrong if guardrails and strict contracts were missing. The **current codebase is written to avoid these bugs**; JUnit tests prove the good behavior.
 
 **If `BUGS.md` feels abstract**, use the companion folder **`reproducible-bugs/`**: plain-English READMEs per scenario, **example “buggy” JSON** files to compare against, and **shell scripts** you can run against a locally started server (`StandaloneGoalCoachServer`).
 
@@ -118,4 +118,33 @@ Each bug below includes severity, the story, and the automated test(s) that woul
 
 - `tests/src/test/java/com/example/goalcoach/GoalCoachApiContractTest.java`
   - `adversarialSqlInjectionGetsLowConfidenceAndNoHallucination()`
+
+## Bug 5 — Profanity is treated as normal goal text
+
+- **Title**: Abusive/profane goal input returns confident coaching output  
+- **Severity**: High (weak moderation posture; produces polished output for unsafe language)
+
+### Repro steps
+
+1. Send:
+   - `POST /api/goal-coach`
+   - body: `{"goal":"I want to be a better manager you asshole"}`
+2. Observe response.
+
+### Expected
+
+- `confidence_score <= 2`
+- `refined_goal == ""` (or otherwise empty)
+- `key_results == []`
+
+### Actual (buggy)
+
+- `confidence_score` is high (e.g., 7–10)
+- Non-empty `refined_goal`
+- 3–5 plausible-looking KRs despite abusive text
+
+### Tests that catch it
+
+- `tests/src/test/java/com/example/goalcoach/GoalCoachApiContractTest.java`
+  - `profanityGetsLowConfidenceAndNoHallucination()`
 
