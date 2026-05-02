@@ -43,7 +43,7 @@ public class GoalCoachUiSeleniumTest extends TestServerConfig {
         goal.sendKeys("I want to improve in sales");
         CommonUtils.maybeUiStepDelay(driver);
         driver.findElement(By.id("submit")).click();
-        CommonUtils.maybeUiStepDelay(driver);
+        CommonUtils.waitForVisibility(driver, By.id("confidence"), 10);
         String confidence = driver.findElement(By.id("confidence")).getText().trim();
         String refined = driver.findElement(By.id("refinedGoal")).getText().trim();
         WebElement keyResults = driver.findElement(By.id("keyResults"));
@@ -75,7 +75,7 @@ public class GoalCoachUiSeleniumTest extends TestServerConfig {
         driver.findElement(By.id("goal")).sendKeys("asdlkjasd qwwerty zzzzzz 9999 !!!!");
         CommonUtils.maybeUiStepDelay(driver);
         driver.findElement(By.id("submit")).click();
-        CommonUtils.maybeUiStepDelay(driver);
+        CommonUtils.waitForVisibility(driver, By.id("confidence"), 10);
         int conf = Integer.parseInt(driver.findElement(By.id("confidence")).getText().trim());
         String refined = driver.findElement(By.id("refinedGoal")).getText().trim();
 
@@ -122,7 +122,7 @@ public class GoalCoachUiSeleniumTest extends TestServerConfig {
         driver.findElement(By.id("goal")).sendKeys("I want to learn public speaking");
         CommonUtils.maybeUiStepDelay(driver);
         driver.findElement(By.id("submit")).click();
-        CommonUtils.maybeUiStepDelay(driver);
+        CommonUtils.waitForVisibility(driver, By.id("back"), 10);
         assertTrue(driver.findElement(By.id("back")).isDisplayed());
         driver.findElement(By.id("back")).click();
         CommonUtils.maybeUiStepDelay(driver);
@@ -205,7 +205,7 @@ public class GoalCoachUiSeleniumTest extends TestServerConfig {
         driver.findElement(By.id("goal")).sendKeys("I want to improve in sales");
         CommonUtils.maybeUiStepDelay(driver);
         driver.findElement(By.id("submit")).click();
-        CommonUtils.maybeUiStepDelay(driver);
+        CommonUtils.waitForVisibility(driver, By.id("keyResults"), 10);
         List<WebElement> items = driver.findElements(By.cssSelector("#keyResults li.kr"));
         assertTrue(items.size() >= 3 && items.size() <= 5, "Expected 3-5 key result rows, got " + items.size());
     }
