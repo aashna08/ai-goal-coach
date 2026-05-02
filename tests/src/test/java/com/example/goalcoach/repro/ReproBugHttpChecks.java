@@ -45,6 +45,8 @@ public final class ReproBugHttpChecks {
         System.out.println("  OK — Bug 02 (contract shape / types)");
         checkBug03NoExtraFields();
         System.out.println("  OK — Bug 03 (no extra top-level fields)");
+        checkBug04AdversarialInputGuardrail();
+        System.out.println("  OK — Bug 04 (adversarial input guardrail)");
         System.out.println("All reproducible-bug HTTP checks passed.");
     }
 
@@ -100,6 +102,21 @@ public final class ReproBugHttpChecks {
         .then()
                 .statusCode(200)
                 .body(matchesJsonSchemaInClasspath("schema/goal_coach_response.schema.json"));
+    }
+
+    private static void checkBug04AdversarialInputGuardrail() {
+        String payload = "I want to improve in sales; DROP TABLE users; --";
+        given()
+                .contentType(ContentType.JSON)
+                .body("{\"goal\":\"" + payload.replace("\"", "\\\"") + "\"}")
+        .when()
+                .post("/api/goal-coach")
+        .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("confidence_score", lessThanOrEqualTo(2))
+                .body("refined_goal", is(""))
+                .body("key_results.size()", is(0));
     }
 
     private static String firstNonBlank(String a, String b) {

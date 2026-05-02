@@ -1,6 +1,6 @@
 # Reproducible bug scenarios (training set)
 
-`BUGS.md` in the repo root describes **three realistic defect stories**. They are **not** live defects in the current code: the implementation is written to **avoid** them, and automated tests **prove** the correct behavior.
+`BUGS.md` in the repo root describes realistic defect stories. They are **not** live defects in the current code: the implementation is written to **avoid** them, and automated tests **prove** the correct behavior.
 
 This folder exists so you can:
 
@@ -15,6 +15,7 @@ This folder exists so you can:
 | **01** | Nonsense goal, but the “AI” still invents SMART goals | High confidence + long `refined_goal` + fake KRs | Low confidence + empty fields |
 | **02** | API shape drifts: missing array or wrong types | `key_results` missing/`null`, or `confidence_score` as a string | JSON Schema + `confidence_score` is an `Integer` |
 | **03** | API adds surprise fields (e.g. `explanation`) | Extra top-level keys | Schema `additionalProperties: false` |
+| **04** | Adversarial goal text still gets confident output | SQL-injection style payload produces non-empty goal/KRs | Low confidence + empty fields for adversarial text |
 
 ## Run the server, then RestAssured checks
 
@@ -50,6 +51,7 @@ Stop the server with **Enter** in terminal 1.
 - [01 — Gibberish hallucination](01-gibberish-hallucination/README.md)  
 - [02 — Contract drift (missing / null / wrong types)](02-contract-drift/README.md)  
 - [03 — Extra unknown fields](03-extra-fields/README.md)  
+- [04 — Adversarial input hallucination](04-adversarial-input-hallucination/README.md)  
 
 ## Automated tests (source of truth)
 
